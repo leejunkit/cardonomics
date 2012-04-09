@@ -1,0 +1,48 @@
+@media all {
+    .panel {
+        overflow                    : hidden;
+        position                    : absolute;
+        display                     : block;
+        width                       : 100%;
+        padding-top                 : 60px;
+        padding-bottom              : 60px;
+        top                         : 0;
+        /*height: 100%; */ /* uncomment if desktop */
+    }
+
+    .scrollable {
+        overflow                    : scroll;
+        -webkit-overflow-scrolling  : touch;
+    }
+
+    .insideScrollablePanel {
+        margin-left                 : 5%;
+        margin-right                : 5%;
+        width                       : 90%;
+    }
+
+    .mainNavHeight{
+        height:110px;
+    }
+
+} /* end of medial all */
+
+/*--- ipad ---*/
+/*--- full screen mode ---*/
+@media (device-width: 768px) and (orientation: portrait) {
+    .panel {
+        height                       : 934px; /*1004-80*/
+    }
+    .navmenu{
+        margin-left:0 !important;
+    }
+}
+/*--- browser mode ---*/
+@media (device-width: 768px) and (orientation: landscape) {
+    .panel {
+        height                       : 668px; /*748-80*/
+    }
+}
+
+
+

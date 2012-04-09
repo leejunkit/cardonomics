@@ -1,0 +1,69 @@
+
+<div class="mainPanel" ng:controller="ReferralCtrl" ng:init="pageLoad()">
+
+    <div class="refpagebanner marginauto"></div>
+
+    <div class="headlineRef">
+        <h2>The best way to learn (and never forget) economic concepts</h2>
+        <h6>Built by students, for students</h6>
+
+    </div>
+
+    <div class="refPanel">
+        <form ng:submit="submitForm(emailAddress)">
+            <div class="dealinfoOne centerText">
+                <span class="headlineStyle purple centerText">Spread the good word and win a 50GB Dropbox account!<br/>
+                Request an invite to learn how</span>
+
+            </div>
+            <div id="refinput" ng:class="hideClass">
+                <fieldset id="refforminput" class="control-group" ng:class="errorClass">
+                    <i class="icon-envelope shiftright"></i>
+                    <input type="text" name="emailAddress" ng:change="validateEmail(emailAddress)" value="Your email address here" onclick="if(this.value=='Your email address here') this.value='';" onblur="this.value=!this.value?'Your email address here':this.value;" />
+                    <span id="msg" class="help-inline">{{errorMessage}}</span>
+                </fieldset>
+                <input type="submit" id="refBtn" class="refbtn btn btn-primary" ng:class="btnDisabledClass" value="{{submitButtonLabel}}" />
+            </div>
+        </form>
+    </div>
+
+    <!--<div class="refsuccess" ng:show="showConfirmation"> -->
+    <div class="refsuccess">
+
+        <div id="share-links" class="well hide">
+
+            <div class="comp-details">
+                Almost done! Share the unique link below with your friends.
+                <br>
+                Refer 6 of them to us and be eligible for the lucky draw!
+            </div>
+
+            <div class="socialIcons">
+                <!-- FB Share -->
+                <a id="fblink" href="https://www.facebook.com/sharer/sharer.php?u=&t=Win+A+50GB+Dropbox+Account!+Cardonomics+the+best+way+to+learn+Economics" target='_blank'>
+                    <div class="fb-share-btn"></div>
+                </a>
+                <!-- Tweet -->
+                <a id="twitterlink" class="twitter-share-btn" href="https://twitter.com/share?url=" target="_blank"></a>
+            </div>
+            <br/><br/>
+            <h5>Or, copy and share this link anywhere!</h5>
+            <div class="control-group success">
+                <input id="gen_reflink" class="centerText" value="{{referralURL}}" ng:click="selectall()"/>
+            </div>
+        </div>
+
+    <br/><br/><br/>
+    </div>
+    <div class="reffooter centerText">
+        <h6 style="color:#666;">Copyright 2012 Cardonomics</h6>
+    </div>
+</div>
+
+
+<!-- GA JS-->
+<script type="text/javascript">
+    _gaq.push(['_trackPageview', location.href.match(/\/app\/(.*)/)[0]]);
+</script>
+
+

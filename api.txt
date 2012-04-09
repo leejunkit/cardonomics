@@ -1,0 +1,117 @@
+1. Player API
+
+a) GET /api/player/<player_facebook_id>
+Returns a JSON object containing
+- player's facebook id
+- player's name, as according to facebook
+- number of wins
+- numbers of losses
+- an array of card keys representing the cards the player currently owns.
+
+If the specified facebook_id does not exist in the datastore, a 404 error is returned. 
+
+b) PUT /api/player/<player_facebook_id>
+If this is a new facebook_id, creates a new Player in the datastore with 
+- 0 wins
+- 0 losses
+- 0 (empty array) cards owned.
+
+You can then make a GET request to the same URL to retrieve the player's JSON object.
+
+If this is an existing player, the player data will be updated in the datastore, according to the paramters passed along with this PUT request. Therefore, when doing this, ensure that you pass in the following data paramters together with the request.
+- wins
+- losses
+- cards owned (as an array of Card key ids)
+
+2. Cards API
+
+a) GET /api/cards/?topic_name=&level_number=
+Returns a JSON array of cards (questions) with the specified topic and level. Returns a maximum of 10 cards by default. 
+
+b) GET /api/cards?<cList>
+Takes in an array of card keys and returns a JSON array of cards (questions) with the specified card keys.
+
+c) POST /api/cards
+This api will create a new card if the id is not found. Therefore, when doing this, ensure that you pass in the required data paramters together with the request.
+- level
+- topic
+- questions_name
+- mcq_answers or (graph_data with graph_answer
+- question_type
+- creator
+These properties will be set to default on creation
+- num_players_owned = 0
+- special_color = ""
+- num_correct_attempts = 0
+- num_wrong_attempts = 0
+
+3. Referrals API
+
+a) POST /api/referrals/
+Send email_address=something@somewhere.com in the POST data to create a new referral code for this email address.
+Referral code will be returned in JSON format.
+
+b) GET /api/referrals/
+Returns a JSON list of the first 20 referral codes and their statistics.
+
+c) GET /api/referrals/<referral_code>
+Returns a JSON object for that particular referral code's statistics.
+
+d) GET /api/referrals/<referral_code>/increment
+Increments the number of referrals for this particular referral code. Returns JSON object with the updated referral code's statistics.
+
+e) POST /api/referrals/<referral_code>/increment
+Send new_email_address=another_email_address@somewhere.com in the POST data when another_email_address@somewhere.com signs up under this referral code. 
+The API will update this referral code's statistics and return a JSON object with the updated statistics.
+Note that this API call will not create a new referral code for another_email_address@somewhere.com, you still have to call method a).
+
+4. A/B Testing API
+
+a) GET /api/ABTest/<page_id>
+Returns a JSON object for that particular page's page_id, with number of visits(num_visits) and number of successful(num_success) usage of that page. This is mainly for A/B testing and other similar functions.
+
+If the specified page_id does not exist in the datastore, a 404 error is returned. 
+
+b) POST api/ABTest/
+This api will create a new page if the page_id is not found. If page_id is found, the page's properties will be updated.Therefore, when doing this, ensure that you pass in the required data paramters together with the request.
+- page_id
+- num_visits
+This property will be set to default on creation
+- num_success = 0
+
+5. Multiplayer Handler
+
+a) GET /api/multiplayergame/<id>
+Returns a JSON object for that particular game's id, player_one_fb_id, player_two_fb_id, player_one_cards, player_two_cards, player_one_time(time taken to finish), player_two_time(time taken to finish), game_status, game_name, game_name, player_one_name, player_two_name, date_created.
+
+If the specified id does not exist in the datastore, a 404 error is returned. 
+
+b) GET /api/multiplayergame/?user_id=
+Returns a JSON list of games that the user is involved in.
+
+c) GET /api/multiplayergame/?user_id=&accepted=
+Returns a JSON list of games that the user created and expects a response as another user has accepted that challenge
+- accepted = 'true'
+
+d) GET /api/multiplayergame/?user_id=&ended=
+Returns a JSON list of games that the user created and has ended
+- ended = 'true'
+
+e) POST /api/multiplayergame/
+
+This api will create a new multiplayer game if the id is not found. If id is found, the game's properties will be updated.Therefore, when doing this, ensure that you pass in the required data paramters together with the request.
+- player_one_fb_id
+- player_two_fb_id
+- player_one_cards
+- player_two_cards
+- player_one_time
+- player_two_time
+- game_status
+- game_name
+- game_name 
+- player_one_name
+- player_two_name
+- date_created.
+
+These properties will be set to default on creation
+- game_status = "active"

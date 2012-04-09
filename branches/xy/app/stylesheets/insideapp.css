@@ -1,0 +1,362 @@
+/** Styles here are for pages after login page **/
+
+/*general styles*/
+.float_l{float:left;}
+.float_r{float:right;}
+.centerText{text-align: center;}
+
+.badge {
+    padding: 1px 4px 2px;
+    font-size: 12.025px;
+    font-weight: bold;
+    white-space: nowrap;
+    color: #ffffff;
+    background-color: #999999;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+}
+.badge:hover {
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+}
+.badge-error {
+    background-color: #b94a48;
+}
+.badge-error:hover {
+    background-color: #953b39;
+}
+.badge-warning {
+    background-color: #f89406;
+}
+.badge-warning:hover {
+    background-color: #c67605;
+}
+.badge-success {
+    background-color: #468847;
+}
+.badge-success:hover {
+    background-color: #356635;
+}
+.badge-info {
+    background-color: #3a87ad;
+}
+.badge-info:hover {
+    background-color: #2d6987;
+}
+.badge-inverse {
+    background-color: #333333;
+}
+.badge-inverse:hover {
+    background-color: #1a1a1a;
+}
+
+/**Main Navigation**/
+.navmenu{
+    margin-top:18px;
+}
+
+.navmenu a{
+    margin-left: 10%;
+    float: left;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: Arial;
+    color: white;
+    text-shadow: 1px 2px 10.5px black;
+}
+
+.navicon{
+     height:50px;
+     width:50px;
+   }
+
+.navmenu .lobbyicon{
+    position:relative;
+    left:-1%;
+    top:0px;
+    left:1%;
+    background:url('../img/lobby.png') no-repeat;
+}
+
+.navmenu .workshopicon{
+    position:relative;
+    left:31%;
+    top:-5px;
+    background:url('../img/workshop.png')
+}
+
+.navmenu .trainingicon{
+    position:relative;
+    left:23%;
+    top:-2px;
+    background:url('../img/workshop2.png')
+}
+
+.navmenu .statsicon{
+    position:relative;
+    left:10%;
+    top:0px;
+    background:url('../img/stats.png')
+}
+
+.navmenu .logouticon{
+    position:relative;
+    left:8%;
+    top:-5px;
+    background:url('../img/logoff.png')
+}
+
+
+.topbarfiller{
+    height:110px;
+    width:100%;
+}
+
+/**Main Panel of App**/
+.mainPanel{
+    height:580px;
+}
+
+/**Btns**/
+.btn .headline{
+    font-size:26px;
+    font-weight: bold;
+}
+.lobbybtn{
+    padding: 20px 110px;
+}
+.lobbybtn.training{
+    max-width: 425px;
+    padding: 20px 59px;
+}
+
+/** custom Content containers **/
+.contentleft{
+    border-right:1px solid #ccc;
+    min-width: 580px;
+    height:100%;
+}
+.mediabox{
+    width:300px;
+    min-height:140px;
+}
+.mediabox .mediaheader{
+    width:inherit;
+}
+.mediabox .mediacontent{
+    width:inherit;
+}
+
+/** Profile box specific styles **/
+.mediabox.profilewell{
+    margin-left: 20px;
+    max-width: 290px;
+    margin-top: 20px;
+    padding-top:0px;
+}
+
+.mediacontent .profilepic{
+    float:left;
+    width:80px;
+}
+.mediacontent .profiledesc{
+    float:left;
+    width:200px;
+    font-size: 16px;
+    line-height: 1.2em;
+    border-left: 1px dashed #DEDEDE;
+    padding-left: 19px;
+}
+
+.badges{
+    height:50px;
+    width:50px;
+    float:left;
+    margin-right:15px;
+    margin-top:10px;
+}
+.trainingtabs{
+    width:800px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.lobbybtn.train{
+    max-width: 100px;
+    padding: 10px 63px;
+    margin-left: 7px;
+    margin-top: 10px;
+}
+
+.centerTrainingTab{
+    margin-left: 37%;
+    width: 230px;
+}
+
+/** Card Styles **/
+.question-meta{
+    height: 20px;
+    width: 205px;
+    float: left;
+    text-align: right;
+    color: #777;
+}
+.user-correct{
+    height:22px;
+    width:31px;
+    background:url('../img/usr_correct.png');
+    position:relative;
+    left:-31px;
+}
+.question-level{
+    height: 45px;
+    width: 50px;
+    background:url('../img/L1.png');
+    float:left;
+}
+.question-level.bottom{
+    position: relative;
+    top: 352px;
+    left: -66px;
+    background:url('../img/L1bottom.png');
+}
+span.Gold{
+    /*color:#a67400; */
+    text-transform: uppercase;
+    display:inline !important;
+}
+
+/** Level Specific Stuff**/
+.question.level2 .question-level{
+    background:url('../img/L2.png');
+}
+.question.level2 .question-level.bottom{
+    background:url('../img/L2bottom.png');
+}
+.question.level3 .question-level{
+    background:url('../img/L3.png');
+}
+.question.level3 .question-level.bottom{
+    background:url('../img/L3bottom.png');
+}
+
+.cardcanvas{
+    background: url("../img/cardcanvas.png") no-repeat;
+    height: 386px;
+    width: 261px;
+    padding:15px 15px 10px 20px;
+    word-wrap: break-word;
+    overflow:hidden;
+}
+.cardcanvas.Gold{
+    background: url("../img/goldcard.png") no-repeat !important;
+}
+
+.question-topic{
+    font-family: Tahoma, serif;
+    font-size: 14px;
+    font-weight:bold;
+    color:#AD6704;
+}
+.question-name{
+    font-family: Cutive, serif;
+    font-size: 18px;
+    color:#AD6704;
+    margin-top:10px;
+}
+.question-body{
+    margin-top: 10px;
+    font-family: Tahoma, Helvetica, Arial;
+    font-size: 16px;
+    color: #333;
+    line-height: 1.3em;
+}
+.question-selection{
+    margin-top: 10px;
+    font-family: Tahoma, Helvetica, Arial;
+    font-size: 10px;
+    color: #333;
+    line-height: 1em;
+}
+.mcq-section{
+    margin-top:2%;
+    height: 300px;
+    width: 435px;
+}
+.mcq-section .control-label{
+
+}
+.mcq-section .info-message{
+    position:relative;
+    height:80px;
+}
+.mcq-section .radio{
+    padding: 10px 15px 10px 25px;
+    margin-bottom:3px;
+    text-align: left !important;
+}
+.mcq-section .radio.btn{
+    width:400px !important;
+}
+/** Training styles **/
+#training-area{
+    margin:7% 0 0 12%;
+}
+#loadingQuestions{
+    margin-top:10%;
+}
+.questionsWrapper{
+    margin-left: 7%;
+    margin-top:5%;
+}
+#training-progress{
+    margin-top: 5%;
+    width: 700px;
+    margin-left: 12%;
+    height: 50px;
+}
+#training-progress .progress{
+    margin-bottom: 5px !important;
+}
+#progressNumber{
+    font-size: 11px;
+    color: #999;
+    text-transform: uppercase;
+}
+#scoreCardMessage{
+    padding-top:5px;
+    border-top:1px dotted #ccc;
+    margin-bottom:15px;
+}
+
+/**Payment styles**/
+.payment .show{
+    display:inline !important;
+}
+.payicons{
+    margin-left:70px;
+}
+.payicon{
+    height:24px;
+    width:24px;
+    float:left;
+}
+.payicon.amex{background:url(../img/american_express_24.png);margin-left:5px;}
+.payicon.discover{background:url(../img/discover_24.png);}
+.payicon.visa{background:url(../img/visa_24.png);}
+.payicon.maestro{background:url(../img/maestro_24.png);}
+.payicon.master{background:url(../img/mastercard_24.png);}
+
+.payment .optionsalign{
+    position: relative;
+    top: 2px;
+}
+
+.h6{
+    font-size: 11px;
+    color: #999;
+    text-transform: uppercase;
+}

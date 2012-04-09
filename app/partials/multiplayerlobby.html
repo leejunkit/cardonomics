@@ -1,0 +1,154 @@
+<div class="navbar navbar-fixed-top">
+        <div class="navbar-inner mainNavHeight">
+            <div class="container">
+                <div class="navmenu">
+                  <a href="#/nav/lobby"><div class="lobbyicon navicon"></div>Lobby</a>
+                  <a href="#/nav/deckworkshop"><div class="workshopicon navicon"></div>Deck Workshop</a>
+                  <a href="#/nav/training"><div class="trainingicon navicon"></div>Go Training</a>
+                  <a href="#/nav/stats"><div class="statsicon navicon"></div>My Stats</a>
+                  <a href="#/nav/logout"><div class="logouticon navicon"></div>Log Out</a>
+                </div>
+            </div>
+        </div>
+</div>
+</br>
+
+
+<div ng:controller="MultiplayerCtrl" ng:init="onload()">
+
+    <div class="game-selection" ng:class="lobbyHideClass">
+        <h3 class="centerText" style="padding-bottom:8px;border-bottom:1px dotted #DEDEDE">Accept Any Challenges And Beat Them!</h3>
+        <br>
+        <!--<h6 style="margin-left:310px;" ng:show="blankChallengeMessage=='show'">No challenges available. Start one today!</h6>-->
+        <ul class="tiles">
+            <div class="tile-area" ng:repeat="game in activeGames">
+                <a class="thumbnail" ng:click="chooseGame(game.id)">
+                    <img class="float_l" style="border:1px solid #333;" ng:src="http://graph.facebook.com/{{game.player_one_fb_id}}/picture"/>
+                    <div class="game-info">
+                        <h4>{{game.player_one_name}}</h4>
+                        <h4>3 Questions</h4>
+                        <h5>Difficulty: Normal</h5>
+                        <span class="h6">{{game.time_elapsed}}</span>
+                    </div>
+                </a>
+            </div>
+        </ul>
+
+        <br class="clearfix"/>
+        <br>
+        <div class="user-challenges well"  >
+            <h3 class="centerText">You've been counter-challenged!</h3>
+            <ul class="tiles">
+                <div class="tile-area" ng:repeat="acc_game in acceptedGames">
+                    <a class="thumbnail" ng:click="counterChallenge(acc_game.id)">
+                        <h6>Opponent:</h6>
+                        <img class="float_l" style="border:1px solid #333;" ng:src="http://graph.facebook.com/{{acc_game.player_two_fb_id}}/picture"/>
+                        <div class="game-info">
+                            <h4>{{acc_game.player_two_name}}</h4>
+                            <h4>3 Questions</h4>
+                            <h5>Difficulty: Normal</h5>
+                            <h6 style="font-weight:normal">{{acc_game.game_status}}</h6>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="tile-area" ng:repeat="game in endedGames">
+                    <a class="thumbnail disabled">
+                        <h6>Opponent:</h6>
+                        <img class="float_l" style="border:1px solid #333;" ng:src="http://graph.facebook.com/{{game.player_two_fb_id}}/picture"/>
+                        <div class="game-info">
+                            <h4>{{game.player_two_name}}</h4>
+                            <h4>3 Questions</h4>
+                            <h5>Difficulty: Normal</h5>
+                            <h6 style="font-weight:normal">{{game.game_status}}</h6>
+                        </div>
+                    </a>
+                </div>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+
+    </div>
+
+    <div class="cardSelectionArea" ng:show="lobbyHideClass=='hide'">
+        <h3 class="centerText">Deck Limit: 5 <a class="h6">(whats this?)</a>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span ng:class="cardErrorClass">{{noOfCardsChosen}}/3 cards selected {{infoMsg}}</span> </h3>
+        <hr>
+        <div id="chooseCard" class="wide-scroller">
+            <div ng:repeat="card in cards">
+                <div id="{{card.id}}" ng:click="addCard(card.id)" class="question level{{card.level}}">
+                    <div class="cardcanvas selection float_l {{card.special_color}}">
+                        <span class="question-level"></span>
+                        <div class="question-meta">
+                            <span class="label label-warning hide {{card.special_color}}"><i class="icon-star icon-white"></i> {{card.special_color}} Card <i class="icon-star icon-white"></i></span>
+                            <span class="label label-success"><i class="icon-ok icon-white"></i> {{card.num_correct_attempts}}</span>
+                            <span class="label label-important"><i class="icon-remove icon-white"></i> {{card.num_wrong_attempts}}</span>
+                        </div>
+                        <br class="clearfix"/>
+                        <div class="question-topic clearfix centerText">{{card.topic}}</div>
+                        <div class="question-name centerText">{{card.question_name}}</div>
+                        <div class="question-body">{{card.question_body}}</div>
+
+                        <div class="question-selection" ng:hide="card.question_type=='graph'">
+                            <ol>
+                                <li class="qAns" ng:repeat="mcq_answer in card.mcq_answers">{{mcq_answer}}</li>
+                            </ol>
+                        </div>
+                        <span class="question-level bottom"></span>
+                    </div>
+                    <span class="selectedCardLabel">Selected</span>
+
+                </div>
+            </div>
+        </div>
+        <div class="centralizeButton">
+            <div ng:class="readyOrNotClass">
+                <!--<span class="big-arrow">»</span> -->
+                <input class="btn btn-info" ng:class="disabledClass" ng:click="add2player()" value="Respond to challenge!" id="submitGame"/>
+                <!--<span class="big-arrow">«</span> -->
+            </div>
+        </div>
+    </div>
+    <br><br><br><br><br>
+    <div class="counterButton marginauto well" ng:show="counterButtonClass=='show'">
+        <h4>Someone's picked up your challenge! Beat him by answering his questions faster than him!</h4>
+            <div class="chosenGameTile thumbnail">
+                <h6>Challenger:</h6>
+                <img class="float_l" style="border:1px solid #333;" ng:src="http://graph.facebook.com/{{chosen_game.player_two_fb_id}}/picture"/>
+                <div class="game-info">
+                    <h4>{{chosen_game.player_two_name}}</h4>
+                    <h4>3 Questions</h4>
+                    <h5>Difficulty: Normal</h5>
+                    <span class="h6">{{chosen_game.time_elapsed}}</span>
+                </div>
+            </div>
+        <div ng:class="readyOrNotClass">
+            <!--<span class="big-arrow">»</span> -->
+            <input class="btn btn-info"  ng:click="startCounterChallenge()" value="I'm ready, let's start!" id="submitGame"/>
+            <!--<span class="big-arrow">«</span> -->
+        </div>
+    </div>
+
+    <div class="modal hide fade" id="scoreCard">
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">×</a>
+            <h3>Cards in this challenge</h3>
+        </div>
+        <div class="modal-body">
+            <!-- Cards here -->
+        </div>
+        <div class="modal-footer">
+            <a href="#/nav/lobby" class="btn">Back to Lobby</a>
+            <a href="#/nav/multiplayerlobby" class="btn btn-warning">New Game</a>
+            <!--<a ng:click="restartTraining()" class="btn btn-info">Try Again</a> -->
+        </div>
+    </div>
+
+
+</div>
+
+<!-- GA JS-->
+<script type="text/javascript">
+    _gaq.push(['_trackPageview', location.href.match(/\/app\/(.*)/)[0]]);
+</script>

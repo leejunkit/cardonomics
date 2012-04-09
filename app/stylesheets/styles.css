@@ -1,0 +1,191 @@
+body {
+    background: url('../img/diamondpat.png');
+    background-repeat: repeat;
+    margin: 0;
+    padding: 0;
+    font-family: Tahoma, Helvetica, Arial, sans-serif;
+}
+.centerText{text-align: center !important;}
+.marginauto{
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.ipadWrapper{
+    height: 530px;  /*KIV THIS HEIGHT*/
+    width:1045px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.loginContainer{
+    height:300px;
+    width:300px;
+}
+
+.logo{
+    height:209px;
+    width:300px;
+    background-image: url('../img/cardonomics_logo.png');
+}
+
+.fb-login-btn{
+    width: 280px;
+    height: 30px;
+    background: #04396C;
+    margin: 20px 0 0 15px;
+    color: white;
+    border-radius: 6px;
+    -webkit-border-radius:6px;
+    -moz-border-radius:6px;
+    border-top: 1px solid #66A3D2;
+    text-align: center;
+    border-bottom: 4px solid #003;
+    padding-top: 10px;
+    font-family: Tahoma;
+    font-size: 19px;
+    text-shadow: 1.5px 2px 0px #033;
+    cursor:pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+    font-weight:bold;
+}
+
+.fb-login-btn:hover{
+    background:#03436A;
+}
+.fb-login-btn:active{
+    border-bottom:1px solid #003;
+    position:relative;
+    top:3px;
+    box-shadow: inset 0px 1px 6px #000;
+}
+
+
+.clearfix{
+    clear:both;
+}
+.float_r{float:right;}
+.float_l{float:left;}
+
+.h4{
+    color: #333;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: Tahoma, Arial, sans-serif;
+    line-height: 25px;
+}
+
+.infoText{
+    font-family: Tahoma,Helvetica,sans-serif;
+    font-size: 12px;
+    text-align: center;
+    margin: 4px 0 0 13px;
+}
+
+/**Referral Page Styles**/
+.refPanel{
+    margin-left:35%;
+}
+
+#refforminput{
+    margin-top:10px;
+}
+
+#refforminput input{
+    height: 28px;
+    padding: 3px 5px 5px 30px;
+    color: #333;
+    font-size: 16px;
+    color:#BEBEBE;
+    margin-top:10px;
+}
+#refforminput input:focus{
+    color:#333;
+}
+
+.refbtn{
+    margin-left: 18px;
+    width: 248px !important;
+    position: relative;
+    top: -10px;
+}
+
+.icon-envelope.shiftright{
+    position:relative;
+    left: 28px;
+    top: 4px;
+}
+.headlineRef{
+    text-align: center;
+    margin-bottom:25px;
+    margin-top:25px;
+}
+.refsuccess{
+    margin-top: 3%;
+    text-align: center;
+}
+.socialIcons{
+    margin-left:41%
+}
+#share-links{
+    margin-bottom:5%;
+}
+
+.fb-share-btn{
+    background: url('../img/facebookshare.png') no-repeat;
+    height:27px;
+    width:86px;
+    float:left;
+}
+.twitter-share-btn{
+    background: url('../img/twitter_counter.png') no-repeat;
+    height:22px;
+    width:60px;
+    float:left;
+    position: relative;
+    top: 3px;
+    left: 5px;
+}
+#gen_reflink{
+    margin-top:4px;
+    font-weight: 900;
+    font-size: 16px;
+}
+.comp-details{
+    padding: 0 5px 10px;
+    border-bottom: 1px dotted #CCC;
+    margin-bottom: 20px;
+    width: 555px;
+    margin-left: 19%;
+    font-family: Cutive, Tahoma, Arial;
+    line-height: 1.7em;
+}
+.hide{
+    display:none;
+}
+.dealinfoOne{
+    position:relative;
+    left:-25%;
+    margin-bottom:10px;
+}
+.headlineStyle{
+    font-family: Cutive, Tahoma, Arial;
+    font-size:18px;
+    line-height: 1.5em;
+}
+.purple{
+    color:#03436A;
+    0pt 1px 0pt rgba(255, 255, 255, 0.7), 0pt 0pt 4px rgba(0, 140, 220, 0.5)
+}
+.reffooter a{color:rgb(0, 136, 204);}
+
+.refpagebanner{
+    background:url(../img/refpagebanner2.png) no-repeat;
+    width:700px;
+    height:268px;
+    margin-top:-30px;
+}
+
+

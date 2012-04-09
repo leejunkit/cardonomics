@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://raw.github.com/DmitryBaranovskiy/raphael/master/raphael-min.js" type="text/javascript"></script>
+
+	<script type="text/javascript">
+		// window.onload = function() {
+		// 	// Creates canvas 320 × 200 at 10, 50
+		// 	var paper = Raphael(50, 420, 320, 200, {
+		// 		fill: "#fc0"
+		// 	});
+
+		// 	// // Creates circle at x = 50, y = 40, with radius 10
+		// 	// var circle = paper.circle(50, 40, 10);
+		// 	// // Sets the fill attribute of the circle to red (#f00)
+		// 	// circle.attr("fill", "#f00");
+
+		// 	// // Sets the stroke attribute of the circle to white
+		// 	// circle.attr("stroke", "#fff");
+
+		// 	var line = paper.path("M10 10L90 90");
+		// 	line.attr({
+		// 		'stroke-width': 10,
+		// 		'fill': '#cccccc',
+		// 		'fill-opacity': 1.0
+		// 	});
+
+		// 	  var startPath = function () {
+		// 	    // path coordinates are best kept as relative distances
+		// 	    // so that you can use the built in translate method
+		// 	    this.ox = 0;
+		// 	    //this.oy = 0;
+		// 	  },
+		// 	  movePath = function (dx, dy) {
+		// 	    // move is called with dx and dy, which we convert
+		// 	    // into translate values, which are reset at the end
+		// 	    // of the function
+		// 	    var trans_x = dx-this.ox;
+		// 	    //var trans_y = dy-this.oy;
+		// 	    this.translate(trans_x,0);
+		// 	    this.ox = dx;
+		// 	    //this.oy = dy;
+		// 	  },
+		// 	  upPath = function () {
+		// 			// nothing special
+		// 	  };
+
+		// 	  line.drag(movePath, startPath, upPath);
+
+		// 	var line2 = paper.path("M10 90L90 10");
+		// 	line2.attr({
+		// 		'stroke-width': 10,
+		// 		'fill': '#cccccc',
+		// 		'fill-opacity': 1.0
+		// 	});
+
+		// 	// var circleOnMove = function(dx, dy, x, y, event) {
+		// 	// 	console.log("moving" + dx + " " + dy);
+		// 	// 	console.log("x is " + this.attr("x"));
+		// 	// 	this.attr({cx: this.ox + dx, cy: this.oy + dy})
+		// 	// };
+
+		// 	// var circleOnStart = function(x, y, event) {
+		// 	// 	console.log("start - x is " + x + " y is " + y);
+		// 	// 	this.ox = this.attr("cx");
+  //  //      		this.oy = this.attr("cy");
+
+  //  //      		console.log("cx is " + cx + " and cy is " + cy);
+		// 	// };
+
+		// 	// var circleOnEnd = function(x, y, event) {
+		// 	// 	console.log("end");
+		// 	// };
+
+		// 	// circle.drag(circleOnMove, circleOnStart, circleOnEnd);
+		// }
+	</script>
+</head>
+<body>
+	<form method='POST' action=''>
+		{{ form_template.as_p }}
+		<input type="submit" value="Save Question" />
+	</form>
+</body>
+</html>

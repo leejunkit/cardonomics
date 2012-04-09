@@ -1,0 +1,49 @@
+1. Player API
+
+a) GET /api/player/<player_facebook_id>
+Returns a JSON object containing
+- player's facebook id
+- player's name, as according to facebook
+- number of wins
+- numbers of losses
+- an array of keys representing the cards the player currently owns.
+
+If the specified facebook_id does not exist in the datastore, a 404 error is returned. 
+
+b) PUT /api/player/<player_facebook_id>
+If this is a new facebook_id, creates a new Player in the datastore with 
+- 0 wins
+- 0 losses
+- 0 (empty array) cards owned.
+
+You can then make a GET request to the same URL to retrieve the player's JSON object.
+
+If this is an existing player, the player data will be updated in the datastore, according to the paramters passed along with this PUT request. Therefore, when doing this, ensure that you pass in the following data paramters together with the request.
+- wins
+- losses
+- cards owned (as an array of Card key ids)
+
+2. Cards API
+
+a) GET /api/cards/<topic_name>/<level_number>
+Returns a JSON array of cards (questions) with the specified topic and level. Returns a maximum of 10 cards by default. 
+
+3. Referrals API
+
+a) POST /api/referrals/
+Send email_address=something@somewhere.com in the POST data to create a new referral code for this email address.
+Referral code will be returned in JSON format.
+
+b) GET /api/referrals/
+Returns a JSON list of the first 20 referral codes and their statistics.
+
+c) GET /api/referrals/<referral_code>
+Returns a JSON object for that particular referral code's statistics.
+
+d) GET /api/referrals/<referral_code>/increment
+Increments the number of referrals for this particular referral code. Returns JSON object with the updated referral code's statistics.
+
+e) POST /api/referrals/<referral_code>/increment
+Send new_email_address=another_email_address@somewhere.com in the POST data when another_email_address@somewhere.com signs up under this referral code. 
+The API will update this referral code's statistics and return a JSON object with the updated statistics.
+Note that this API call will not create a new referral code for another_email_address@somewhere.com, you still have to call method a).

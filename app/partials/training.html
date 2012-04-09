@@ -1,0 +1,82 @@
+<div class="navbar navbar-fixed-top">
+        <div class="navbar-inner mainNavHeight">
+            <div class="container">
+                <div class="navmenu">
+                  <a href="#/nav/lobby"><div class="lobbyicon navicon"></div>Lobby</a>
+                  <a href="#/nav/deckworkshop"><div class="workshopicon navicon"></div>Deck Workshop</a>
+                  <a href="#/nav/training"><div class="trainingicon navicon"></div>Go Training</a>
+                  <a href="#/nav/stats"><div class="statsicon navicon"></div>My Stats</a>
+                  <a href="#/nav/logout"><div class="logouticon navicon"></div>Log Out</a>
+                </div>
+            </div>
+        </div>
+</div>
+
+
+<br/>
+<div class="massiveWrapper" ng:controller="TrainingCtrl">
+    <!-- Tabs start -->
+    <div id="trainingOptions" class="trainingtabs">
+        <h2>What type of training?</h2>
+
+        <br/>
+        <div class="tabbable" ng:init="option='build'">
+            <ul class="nav nav-tabs" ng:init="build='active'">
+
+                <li ng:class="build"><a id="build" ng:click="revise='';build='active';option='build'">Build Deck</a></li>
+                <li ng:class="revise"><a id="revise" ng:click="build='';revise='active';option='revise'">Revise Cards</a></li>
+            </ul>
+
+            <div class="training-note alert">
+                <strong>Default settings activated</strong><br>
+                Welcome to training! For now you can only play in Build Deck mode, on Level 1 with
+                no time limit. But we're sure it'll still be a challenge!
+                By the way, something <strong>exciting</strong> awaits those who get a perfect score!
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane active" ng:show="option=='build'" ng:init="currentLevel='1';l1='active'">
+                    <div class="centerTrainingTab">
+                    <h3 class="centerText">Pick a level</h3>
+                    <div class="btn-group" style="margin-left:23px">
+                        <button id="levelOneBtn" class="btn" ng:class="l1" ng:click="currentLevel='1';l1='active';l2='';l3=''">Level 1</button>
+                        <button id="levelTwoBtn" class="btn" ng:class="l2" ng:click="currentLevel='2';l2='active';l1='';l3=''">Level 2</button>
+                        <button id="levelThreeBtn" class="btn">Level 3</button>
+                    </div>
+                    <br/><br/>
+                    <h3 class="centerText">Time Limit Per Question</h3>
+                    <div class="btn-group" style="margin-left:8px;">
+                        <a id="nolimit" class="btn active">No Limit</a>
+                        <a class="btn">3 Min</a>
+                        <a class="btn">1 Min</a>
+                        <a class="btn">30s</a>
+                    </div>
+                    <br/><br/>
+                    <h3 class="centerText">Pick a Topic</h3>
+                    <select id="select01" style="margin-left:7px;">
+                        <option>Demand & Supply</option>
+                    </select>
+                    <br/>
+                    <a ng:click="startTraining()" id="startBuildTrainingBtn" class="btn btn-large btn-warning lobbybtn train">
+                        <span>Start Training!</span>
+                    </a>
+                    </div>
+                </div>
+
+                <div class="tab-pane active" ng:show="option=='revise'">
+                    <h2 style="text-align: center;">Go Training with all my cards!</h2>
+                    <div class="centerTrainingTab">
+                        <a href ="index.html#/nav/training"  class="btn btn-large btn-warning lobbybtn train">
+                            <span>Start Training!</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- GA JS-->
+<script type="text/javascript">
+    _gaq.push(['_trackPageview', location.href.match(/\/app\/(.*)/)[0]]);
+</script>
+

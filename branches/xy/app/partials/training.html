@@ -1,0 +1,297 @@
+<div class="navbar navbar-fixed-top">
+        <div class="navbar-inner mainNavHeight">
+            <div class="container">
+                <div class="navmenu">
+                  <a href="#/nav/lobby"><div class="lobbyicon navicon"></div>Lobby</a>
+                  <a href="#/nav/deckworkshop"><div class="workshopicon navicon"></div>Deck Workshop</a>
+                  <a href="#/nav/training"><div class="trainingicon navicon"></div>Go Training</a>
+                  <a href="#/nav/stats"><div class="statsicon navicon"></div>My Stats</a>
+                  <a href="#/nav/logout"><div class="logouticon navicon"></div>Log Out</a>
+                </div>
+            </div>
+        </div>
+</div>
+
+
+<br/>
+<div class="massiveWrapper" ng:controller="TrainingCtrl">
+    <!-- Tabs start -->
+    <div id="trainingOptions" class="trainingtabs">
+        <h2>What type of training?</h2>
+
+        <br/>
+        <div class="tabbable">
+            <ul class="nav nav-tabs">
+
+                <li id="tabOne" class="active"><a ng:click="tabClickHandler(1)">Build Deck</a></li>
+                <li id="tabTwo"><a  ng:click="tabClickHandler(2)">Revise Cards</a></li>
+            </ul>
+
+            <div class="training-note alert">
+                <strong>Default settings activated</strong><br>
+                Welcome to training! For now you can only play in Build Deck mode, on Level 1 with
+                no time limit. But we're sure it'll still be a challenge!
+                By the way, something <strong>exciting</strong> awaits those who get a perfect score!
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tabContentOne">
+                    <div class="centerTrainingTab">
+                    <h3 class="centerText">Pick a level</h3>
+                    <div class="btn-group" style="margin-left:23px">
+                        <a id="l1" ng:click="optionsHandler(1)" class="btn">Level 1</a>
+                        <a id="l2" ng:click="optionsHandler(2)" class="btn">Level 2</a>
+                        <a id="l3" class="btn">Level 3</a>
+                    </div>
+                    <br/><br/>
+                    <h3 class="centerText">Time Limit Per Question</h3>
+                    <div class="btn-group" data-toggle="buttons-radio" ng:click="optionsHandler()" style="margin-left:8px;">
+                        <a id="nolimit" class="btn">No Limit</a>
+                        <a class="btn">3 Min</a>
+                        <a class="btn">1 Min</a>
+                        <a class="btn">30s</a>
+                    </div>
+                    <br/><br/>
+                    <h3 class="centerText">Pick a Topic</h3>
+                    <select id="select01" style="margin-left:7px;">
+                        <option>Demand & Supply</option>
+                    </select>
+                    <br/>
+                    <a ng:click="startTraining()" class="btn btn-large btn-warning lobbybtn train">
+                        <span>Start Training!</span>
+                    </a>
+                    </div>
+                </div>
+
+                <div class="tab-pane active"  id="tabContentTwo">
+                    <h2 style="text-align: center;">Go Training with all my cards!</h2>
+                    <div class="centerTrainingTab">
+                        <a href ="index.html#/nav/training"  class="btn btn-large btn-warning lobbybtn train">
+                            <span>Start Training!</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="loadingQuestions" class="well hide">
+        <h2 class="centerText">Loading up questions, please wait...</h2>
+        <div class="progress progress-striped active">
+            <div id="progressBar" class="bar" style="width: 100%;"></div>
+        </div>
+    </div>
+    <div id="training-progress" class="hide">
+        <div id="trainingProgressBar" class="progress progress-striped progress-info active">
+            <div class="bar" style="width: 0%;"></div>
+        </div>
+        <div id="progressNumber" class="centerText"></div>
+    </div>
+    <!-- this is where I will dump the questions -->
+    <div class="questionsWrapper">
+        <div id="q{{$index + 1}}" class="question hide" ng:repeat="card in cards">
+            <div class="cardcanvas float_l {{card.special_color}}">
+                <span class="question-level"></span>
+                <div class="question-meta">
+                    <span class="label label-warning hide {{card.special_color}}"><i class="icon-star icon-white"></i> {{card.special_color}} Card <i class="icon-star icon-white"></i></span>
+                    <span class="label label-success"><i class="icon-ok icon-white"></i> {{card.num_correct_attempts}}</span>
+                    <span class="label label-important"><i class="icon-remove icon-white"></i> {{card.num_wrong_attempts}}</span>
+                </div>
+                <br class="clearfix"/>
+                <div class="question-topic clearfix centerText">{{card.topic}}</div>
+                <div class="question-name centerText">{{card.question_name}}</div>
+                <div class="question-body">{{card.question_body}}</div>
+                <div class="question-selection">
+                    <ol>
+                    <li class="qAns" ng:repeat="mcq_answer in card.mcq_answers">{{mcq_answer}}</li>
+                    </ol>
+                </div>
+            </div><span class="question-level bottom"></span>
+
+            <div class="mcq-section float_l">
+                <div class="info-message">
+                    <div class="wrong alert alert-error hide">
+                        <a class="close" data-dismiss="alert" ng:click="hideErrorMessage()">x</a>
+                        <strong>Wrong!</strong> But on Cardonomics,
+                        we applaud you for being wrong, because that
+                        means you get to learn!
+                        <br>
+                        <a class="btn btn-success btn-mini">Learn why</a>
+                        <a class="btn btn-danger btn-mini" ng:click="skipQuestion()">Skip »</a>
+                    </div>
+                </div>
+                <label class="control-label"><h4>Your Answer</h4></label>
+                <div class="mcq-individual-answer control-label" ng:repeat="mcq_answer in card.mcq_answers">
+                    <div class="control">
+                        <label class="radio btn"><input type="radio" name="{{card.id}}-answer" value="{{mcq_answer}}" ng:click="submitMcqAnswer(card.id)" />{{mcq_answer}}</label>
+                    </div>
+
+                </div>
+                <!--<input type="button" class="btn btn-info" value="Submit Answer" ng:click="submitMcqAnswer()"/> -->
+            </div>
+        </div>
+
+    <!--  <div id="q1" class="question hide">
+            <div class="cardcanvas float_l">
+                <span class="question-level"></span>
+                <div class="question-meta">
+                    <span class="badge badge-success"><i class="icon-ok icon-white"></i> 23</span>
+                    <span class="badge"><i class="icon-remove icon-white"></i> 42</span>
+                </div>
+                <br class="clearfix"/>
+                <div class="question-topic clearfix centerText">Demand and Supply</div>
+                <div class="question-name centerText">Uncle's Vineyard1</div>
+                <div class="question-body">
+                    Jenny’s uncle runs a vineyard.
+                    Last month, a tornado struck
+                    the factory which supplied the
+                    vineyard with glass bottles.
+                    Jenny’s uncle must adjust the
+                    price of his wine in order to
+                    pay for the higher bottle prices.
+                    Show the changes on the
+                    Demand-Supply Graph,
+                    and suggest how much each
+                    wine should now cost.
+                </div>
+            </div><span class="question-level bottom"></span>
+
+            <div class="mcq-section float_l">
+                <div class="info-message">
+                    <div id="wrong" class="alert alert-error hide">
+                        <a class="close" data-dismiss="alert" ng:click="hideErrorMessage()">x</a>
+                        <strong>Wrong!</strong> But on Cardonomics,
+                        we applaud you for being wrong, because that
+                        means you get to learn!
+                        <br>
+                            <a class="btn btn-success btn-mini">Learn why</a>
+                            <a class="btn btn-danger btn-mini">Skip »</a>
+                    </div>
+                </div>
+                <div class="mcq-individual-answer control-label">
+                    <label class="control-label"><h4>Your Answer</h4></label>
+                    <div class="control">
+                        <label class="radio btn"><input type="radio" name="{{card.id}}-answer" value="Answer 1" ng:click="submitMcqAnswer()"/>  is something like this and something like that but not really right </label>
+                        <label class="radio btn"><input type="radio" name="{{card.id}}-answer" value="Answer 1" />  is something like this and something like that but not really right </label>
+                        <label class="radio btn"><input type="radio" name="{{card.id}}-answer" value="Answer 1" />  is something like this and something like that but not really right </label>
+                        <label class="radio btn"><input type="radio" name="{{card.id}}-answer" value="Answer 1" />  is something like this and something like that but not really right </label>
+                    </div>
+                    <input type="button" class="btn btn-info" value="Submit Answer" ng:click="submitMcqAnswer()" />
+                </div>
+            </div> -->
+    </div>
+
+    <!-- Score card -->
+    <div class="modal fade hide" id="scoreCard">
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">×</a>
+            <h3>Nice job! Here's your Score card</h3>
+        </div>
+        <div class="modal-body">
+            <h2>Score: {{score}}&nbsp;({{percentage}}%)!</h2>
+            <br>
+            <div id="scoreCardMessage">
+                <span class="badge badge-warning">Pro Tip</span>
+                Get all the answers correct and get to choose a card from
+                the questions you answered. You can then use the cards
+                you've earned to challenge your friends!
+                <br /><br />
+                <!-- G Form Frame -->
+                <iframe src="https://docs.google.com/spreadsheet/embeddedform?formkey=dFVjWWx0aVhJOTBFRlJaRkVSQWtPb0E6MQ" width="525" height="720" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+            </div>
+            <div id="cardChoice" class="hide">
+                <table class="table table-striped">
+                    <tr><th>No.</th><th>Question</th><th>Option</th></tr>
+                    <tr ng:repeat="card in cards"><td>{{$index + 1}}</td>
+                        <td>{{card.question_name}}</td>
+                        <td>
+                            <a ng:click="addCardToPlayer(card.id,card.question_name)" ng:hide="card.special_color">Add to collection!</a>
+                            <div class="btn btn-info" ng:show="card.special_color" ng:click="revealPurchaseArea(card.id,card.question_name)">Buy Now! @ $4.90</div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div id="paymentArea" class="modal-body hide">
+            <h3>You are purchasing: {{chosen_card_name}}</h3>
+            <form id="payment-form" class="form-horizontal payment well">
+                <div class="payicons">
+                    <span class="float_l optionsalign">We accept all major credit cards</span>
+                    <div class="payicon amex"></div>
+                    <div class="payicon discover"></div>
+                    <div class="payicon visa"></div>
+                    <div class="payicon master"></div>
+                    <div class="payicon maestro"></div>
+                </div>
+                <br class="clearfix" />
+                <br class="clearfix" />
+
+                <div class="control-group">
+                    <label class="control-label">Full Name </label>
+                    <div class="controls">
+                        <input type="text" name="full_name" value="" ng:click="credit='hide';green='control-group'"/>
+                    </div>
+                </div>
+                <div class="control-group success" ng:class='green'>
+                    <label class="control-label">Credit Card Number</label>
+                    <div class="controls">
+                        <input type="text" name="credit_num" value="" ng:click="credit='show help-inline';green='control-group success'"/>
+                        <span class="help-inline" ng:class="credit">Doesn't have to be a real creditcard number!</span>
+                    </div>
+                </div>
+                <div class="control-group success" ng:class='green'>
+                    <label class="control-label">CVV</label>
+                    <div class="controls">
+                        <input class="input-mini" type="text" name="cvv" value="" ng:click="credit='hide';green='control-group'"/>
+                        <span class="help-inline" ng:class="credit">Yep, just put in whatever!</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Expiry Date</label>
+                    <div class="controls">
+                        <select id="month" class="span1">
+                            <option>MM</option>
+                            <option>01</option><option>02</option><option>03</option><option>04</option>
+                            <option>05</option><option>06</option><option>07</option><option>08</option>
+                            <option>09</option><option>10</option><option>11</option><option>12</option>
+                        </select>
+                        <select id="year" class="span1">
+                            <option>YY</option>
+                            <option>2012</option><option>2013</option><option>2014</option><option>2015</option>
+                            <option>2016</option><option>2017</option><option>2018</option><option>2019</option>
+                            <option>2020</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <div class="btn btn-large btn-warning" ng:click="validateForm(chosen_card_id,chosen_card_name)">Buy Card!</div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a ng:click="redirectToLobby()" class="btn">Back to Lobby</a>
+            <a href="javascript:location.reload(true)" class="btn btn-warning">New Game</a>
+            <!--<a ng:click="restartTraining()" class="btn btn-info">Try Again</a> -->
+        </div>
+    </div>
+
+
+</div>
+<!-- GA JS-->
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-29952554-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+
+

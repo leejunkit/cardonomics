@@ -1,0 +1,149 @@
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+
+<div class="navbar navbar-fixed-top">
+	<div class="navbar-inner mainNavHeight">
+		<div class="container">
+			<div class="navmenu">
+				<a href="#/nav/lobby"><div class="lobbyicon navicon"></div>Lobby</a>
+				<a href="#/nav/deckworkshop"><div class="workshopicon navicon"></div>Deck Workshop</a>
+				<a href="#/nav/training"><div class="trainingicon navicon"></div>Go Training</a>
+				<a href="#/nav/stats"><div class="statsicon navicon"></div>My Stats</a>
+				<a href="#/nav/logout"><div class="logouticon navicon"></div>Log Out</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<br/>
+
+<div class="massiveWrapper" ng:controller="Training2Ctrl" ng:init="startTraining()">
+	<div id="training-progress" class="hide">
+		<div id="trainingProgressBar" class="progress progress-striped progress-info active">
+			<div class="bar" style="width: 0%;">
+			</div>
+		</div>
+		<div id="progressNumber" class="centerText">
+		</div>
+	</div>
+
+	<div class="questionsWrapper" ng:init="perfectScore='no'">
+		<!-- this is the Graph question template -->
+		<div id="q{{$index + 1}}" class="question level{{card.level}}" ng:show="card.question_type=='graph'">
+            <div class="cardcanvas float_l {{card.special_color}}">
+                <span class="question-level"></span>
+                <div class="question-meta">
+                    <span class="label label-warning hide {{card.special_color}}"><i class="icon-star icon-white"></i> {{card.special_color}} Card <i class="icon-star icon-white"></i></span>
+                    <span class="label label-success"><i class="icon-ok icon-white"></i> {{card.num_correct_attempts}}</span>
+                    <span class="label label-important"><i class="icon-remove icon-white"></i> {{card.num_wrong_attempts}}</span>
+                </div>
+                <br class="clearfix"/>
+                <div class="question-topic clearfix centerText">{{card.topic}}</div>
+                <div class="question-name centerText">{{card.question_name}}</div>
+                <div class="question-body">{{card.question_body}}</div>
+
+				<input type="button" class="btn btn-info graph-button" value="Check Answer" ng:click="playerHasAnsweredQuestion()" />
+				<input type="button" class="btn btn-info graph-button" value="Reset Graph" ng:click="resetGraph()" />
+			</div><span class="question-level bottom"></span>
+            <div id="graph-canvas"></div>
+            <div class="y axis">Price ($)</div>
+            <div class="x axis">Quantity</div>
+		</div>
+
+		<!-- this is the MCQ question template -->
+		<div id="q{{$index + 1}}" class="question level{{card.level}}" ng:show="card.question_type=='mcq'">
+			<div class="cardcanvas float_l {{card.special_color}}">
+				<span class="question-level"></span>
+				<div class="question-meta">
+					<span class="label label-warning hide {{card.special_color}}"><i class="icon-star icon-white"></i> {{card.special_color}} Card <i class="icon-star icon-white"></i></span>
+					<span class="label label-success"><i class="icon-ok icon-white"></i> {{card.num_correct_attempts}}</span>
+					<span class="label label-important"><i class="icon-remove icon-white"></i> {{card.num_wrong_attempts}}</span>
+				</div>
+				<br class="clearfix"/>
+				<div class="question-topic clearfix centerText">{{card.topic}}</div>
+				<div class="question-name centerText">{{card.question_name}}</div>
+				<div class="question-body">{{card.question_body}}</div>
+				<!-- 
+				<div class="question-selection">
+					<ol>
+					<li class="qAns" ng:repeat="mcq_answer in card.mcq_answers">{{mcq_answer}}</li>
+					</ol>
+				</div> -->
+			</div><span class="question-level bottom"></span>
+
+			<div class="mcq-section float_l">
+				<div class="info-message">
+					<div class="wrong alert alert-error hide">
+						<a class="close" data-dismiss="alert" ng:click="hideErrorMessage()">x</a>
+						<strong>Wrong!</strong> But on Cardonomics,
+						we applaud you for being wrong, because that
+						means you get to learn!
+						<br>
+						<a class="btn btn-success btn-mini">Learn why</a>
+						<a class="btn btn-danger btn-mini" ng:click="advanceNextCard()">Skip »</a>
+					</div>
+				</div>
+				<label class="control-label"><h4>Your Answer</h4></label>
+				<div class="mcq-individual-answer control-label" ng:repeat="mcq_answer in card.scrambled_mcq_answers">
+					<div class="control">
+						<label class="radio btn"><input type="radio" name="{{card.id}}-answer" value="{{mcq_answer}}" ng:click="playerHasAnsweredQuestion(mcq_answer)" />{{mcq_answer}}</label>
+					</div>
+
+				</div>
+				<!--<input type="button" class="btn btn-info" value="Submit Answer" ng:click="submitMcqAnswer()"/> -->
+			</div>
+		</div>
+	</div>
+
+	<!-- Score card -->
+    <div class="modal hide fade" id="scoreCard">
+        <div class="modal-header">
+            <a class="close" ng:click="returnToTraining()">×</a>
+            <h3>Nice job! Here's your score card</h3>
+        </div>
+        <div class="modal-body">
+            <h2>Score: {{numCorrectAnswers}}&nbsp;of&nbsp;{{cards.length}}&nbsp;({{numCorrectAnswers/cards.length * 100}}%)</h2>
+            <br>
+            <div class="scoreCardMessage" ng:hide="perfectScore=='yes'">
+                <span class="badge badge-warning">Pro Tip</span>
+                Get all the answers correct and get to choose a card from
+                the questions you answered. You can then use the cards
+                you've earned to challenge your friends!
+                <br /><br />
+                <!-- G Form Frame -->
+                <iframe src="https://docs.google.com/spreadsheet/embeddedform?formkey=dFVjWWx0aVhJOTBFRlJaRkVSQWtPb0E6MQ" width="525" height="720" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+            </div>
+
+            <div class="scoreCardMessage" ng:show="perfectScore=='yes'">
+                <h4>Pick a card to add to your collection!</h4><br>
+                <span class='badge badge-success'> Limited Offer! </span>&nbsp;
+                As part of our beta special, you can 'buy' cards for free!
+                Simply enter any 18 digit number as a credit card. Have fun!&nbsp;&nbsp;&nbsp;&nbsp;
+                <span class='h6'>- The Cardonomics Team</span><br>
+            </div>
+
+            <div id="cardChoice" ng:show="perfectScore=='yes'">
+                <table class="table table-striped">
+                    <tr><th>No.</th><th>Question</th><th>Option</th></tr>
+                    <tr ng:repeat="card in cards"><td>{{$index + 1}}</td>
+                        <td>{{card.question_name}}</td>
+                        <td>
+                            <a ng:click="addCardToPlayer(card.id)" ng:hide="card.special_color">Add to collection!</a>
+                            <div class="btn btn-info" ng:show="card.special_color" ng:click="processPurchase(card.id,card.question_name)">Buy Now! @ $4.90</div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a ng:click="returnToLobby()" class="btn">Back to Lobby</a>
+            <a ng:click="returnToTraining()" class="btn btn-warning">New Game</a>
+            <!--<a ng:click="restartTraining()" class="btn btn-info">Try Again</a> -->
+        </div>
+    </div>
+</div>
+
+<!-- GA JS-->
+<script type="text/javascript">
+    _gaq.push(['_trackPageview', location.href.match(/\/app\/(.*)/)[0]]);
+</script>

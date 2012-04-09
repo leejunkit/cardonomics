@@ -1,0 +1,76 @@
+<div class="navbar navbar-fixed-top" ng:bind="startFBVerification">
+        <div class="navbar-inner mainNavHeight">
+            <div class="container">
+                <div class="navmenu">
+                  <a href="#/nav/lobby"><div class="lobbyicon navicon"></div>Lobby</a>
+                  <a href="#/nav/deckworkshop"><div class="workshopicon navicon"></div>Deck Workshop</a>
+                  <a href="#/nav/training"><div class="trainingicon navicon"></div>Go Training</a>
+                  <a href="#/nav/stats"><div class="statsicon navicon"></div>My Stats</a>
+                  <a href="#/nav/logout"><div class="logouticon navicon"></div>Log Out</a>
+                </div>
+            </div>
+        </div>
+</div>
+<div class="mainPanel" ng:controller="UserDetails" ng:init="onLoad();">
+
+    <!-- Button panel-->
+    <div class="float_l contentleft">
+        <br/>
+        <h2>Welcome, {{username}}</h2>
+        <br/><br/><br/>
+        <a href="#/nav/training" class="btn btn-large btn-warning lobbybtn training">
+            <span class="headline">Go Training</span>  <span class="label-success label">Try Now!</span>
+            <br>Build up your deck and knowledge with some practice questions</a>
+        <br/><br/><br/>
+        <a href="#/nav/createmultiplayergame" class="btn btn-large btn-primary lobbybtn">
+            <span class="headline">Play Quick Game</span>    <span class="label-success label">ITS HERE!</span>
+            <br>Pit your cards against a random opponent!</a>
+        <br/><br/><br/>
+        <a href="#/nav/multiplayerlobby" class="btn btn-large btn-success lobbybtn">
+            <span class="headline">Accept Challenges</span>    <span class="label-success label">ITS HERE!</span>
+            <br>Accept a Challenge and pit your cards against them!</a>
+    </div>
+
+    <!-- Profile panel -->
+    <div class="float_l">
+        <div class="mediabox well profilewell">
+            <br/>
+            <div class="mediaheader centerText">
+                <h3>My Profile</h2>
+            </div>
+            <br/>
+            <div class="mediacontent" style="margin-left:30px">
+                <div class="profilepic">
+                    <div class="navicon" style="border: 1px solid">
+                        <img ng:src="http://graph.facebook.com/{{userid}}/picture"/>
+                    </div>
+                </div>
+                <div class="profiledesc">
+                    {{username}}<br/>
+                    {{user_rank}} <br/>
+                    {{user_wins}} wins <br/>
+                    {{user_losses}} losses <br/>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="mediabox" style="margin-left:20px;">
+            <br/>
+            <div class="mediaheader centerText">
+                <h3>My Badges</h3>
+            </div>
+            <br/>
+            <div class="mediacontent">
+               <!-- <div class="navicon badges" style="border: 1px solid"></div> -->
+                <h6 class="centerText">You've no badges yet!</h6>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- GA JS-->
+<script type="text/javascript">
+    _gaq.push(['_trackPageview', location.href.match(/\/app\/(.*)/)[0]]);
+</script>

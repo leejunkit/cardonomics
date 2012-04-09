@@ -1,0 +1,49 @@
+<div class="navbar navbar-fixed-top" ng:bind="startFBVerification">
+        <div class="navbar-inner mainNavHeight">
+            <div class="container">
+                <div class="navmenu">
+                  <a href="#/nav/lobby"><div class="lobbyicon navicon"></div>Lobby</a>
+                  <a href="#/nav/deckworkshop"><div class="workshopicon navicon"></div>Deck  Workshop</a>
+                  <a href="#/nav/training"><div class="trainingicon navicon"></div>Go Training</a>
+                  <a href="#/nav/stats"><div class="statsicon navicon"></div>My Stats</a>
+                  <a href="#/nav/logout"><div class="logouticon navicon"></div>Log Out</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<br /><br /><br />
+<div ng:controller="PurchaseCtrl" ng:init="onLoad()">
+
+    <div id="card_bought" class="span12 hide question level{{card.level}}">
+        <div class="span4 offset2 cardcanvas {{card.special_color}}">
+            <span class="question-level"></span>
+            <div class="question-meta">
+                <span class="label label-warning hide {{card.special_color}}"><i class="icon-star icon-white"></i> {{card.special_color}} Card <i class="icon-star icon-white"></i></span>
+                <span class="label label-success"><i class="icon-ok icon-white"></i> {{card.num_correct_attempts}}</span>
+                <span class="label label-important"><i class="icon-remove icon-white"></i> {{card.num_wrong_attempts}}</span>
+            </div>
+            <br class="clearfix"/>
+            <div class="question-topic clearfix centerText">{{card.topic}}</div>
+            <div class="question-name centerText">{{card.question_name}}</div>
+            <div class="question-body">{{card.question_body}}</div>
+            <div class="question-selection" ng:hide='card.question_type=="graph"'>
+                <ol>
+                    <li class="qAns" ng:repeat="mcq_answer in card.mcq_answers">{{mcq_answer}}</li>
+                </ol>
+            </div>
+        </div><span class="question-level bottom"></span>
+        <div class="span4" style="text-align:center;margin-left:-50px;">
+            <br><br><br><br>
+
+            <h2><span class="cutout">Sweet!</span> You have successfully obtained {{card.question_name}}</h2>
+            <br>
+            <a href="#/nav/lobby" class="btn btn-large btn-inverse" id="lobbyBtn">Return to Lobby</a>
+        </div>
+    </div>
+</div>
+
+<!-- GA JS-->
+<script type="text/javascript">
+    _gaq.push(['_trackPageview', location.href.match(/\/app\/(.*)/)[0]]);
+</script>

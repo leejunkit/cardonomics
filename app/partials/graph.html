@@ -1,0 +1,17 @@
+<div class="massiveWrapper" ng:controller="GraphQuestionCtrl">
+	<div id="graph-canvas">
+
+	</div>
+
+	<div id="question-text">
+		<h1>{{card.question_name}}</h1>
+
+		<p>{{card.question_body}}</p>
+
+		<input type="button" value="Check Answer" ng:click="checkAnswerButtonClicked()" />
+	</div>
+</div>
+<!-- GA JS-->
+<script type="text/javascript">
+    _gaq.push(['_trackPageview', location.href.match(/\/app\/(.*)/)[0]]);
+</script>

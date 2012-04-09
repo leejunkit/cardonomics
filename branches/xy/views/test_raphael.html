@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="raphael.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		var referenceQuestionData = {
+			'lines': [
+				{
+					'equation': 'y-x',
+					'title': 'Supply Curve',
+					'movable': true,
+					'points': {
+						// points (remember they are NOT caretsian coords) have to be generated in python
+						'min': [0,0], // screen coords will be [0, whatever is the max height of the canvas]
+						'max': [20,20] // screen coords will be [20, 0]
+					}
+				},
+
+				{
+					'equation': 'y-x-20',
+					'title': 'Demand Curve',
+					'movable': true,
+					'points': {
+						// points (remember they are NOT caretsian coords) have to be generated in python
+						'min': [0,20], // screen coords will be [0,0]
+						'max': [20,0] // screen coords will be [20, whatever the max height is]
+					}
+				}
+			],
+
+			'axes': {
+				'x': {
+					'title': 'Price',
+					'max': 20
+				},
+
+				'y': {
+					'title': 'Quantity',
+					'max': 20
+				}
+			},
+
+			'solution': {
+				'Demand Curve': {
+					'deviation': -1
+				},
+
+				'Supply Curve': {
+					'deviation': 0
+				}
+			}
+		};
+
+		var graph = {
+			'renderGraph': function(questionData, scaleFactor) {
+				var paper = Raphael(10, 10, 500, 500, {
+					fill: "#000"
+				});
+
+				// create the y-axis
+				yAxisLinePath = 'M0 ' + (questionData.axes.y.max * scaleFactor) + 'L0 0';
+				var yAxis = paper.path(yAxisLinePath);
+				yAxis.attr({
+					'stroke-width': 3
+				});
+
+				xAxisLinePath = 'M0 ' + (questionData.axes.y.max * scaleFactor) + 'L' + (questionData.axes.x.max * scaleFactor) + ' '
+				+ (questionData.axes.y.max * scaleFactor);
+				var xAxis = paper.path(xAxisLinePath);
+				xAxis.attr({
+					'stroke-width': 3
+				});
+
+				// loop through the equations in questionData
+				questionData.lines.forEach(function(line) {
+					// need to deal with the conversion between cartesian and screen coordinates here
+					var linePath = 'M' + (line.points.min[0] * scaleFactor) + ' ' 
+					+ ((questionData.axes.y.max - line.points.min[1]) * scaleFactor)
+					+ 'L' + (line.points.max[0] * scaleFactor) + ' ' + ((questionData.axes.y.max - line.points.max[1]) * scaleFactor)
+
+					var lineRender = paper.path(linePath);
+					lineRender.attr({
+						'stroke-width': 5,
+						'fill': '#cccccc',
+						'fill-opacity': 1.0
+					});
+
+					this.lineMovementMetadata[line.title] = {
+						'originalX': null,
+						'deviationX': 0
+					}
+
+					// create the text label
+					var textLabel = paper.text((line.points.max[0] * scaleFactor) + 40, ((questionData.axes.y.max - line.points.max[1]) * scaleFactor), line.title);
+
+					//group them together
+					//var lineSet = paper.set().push(lineRender, textLabel);
+
+					var self = this;
+
+					// attach drag event handlers to the line
+					lineRender.drag(
+						function onDragMove(dx, dy) {
+							var transX = dx - self.lineMovementMetadata[line.title]['ox'];
+							self.lineMovementMetadata[line.title]['deviationX'] += transX;
+							
+							//var trans_y = dy-this.oy;
+							this.translate(transX, 0);
+							textLabel.translate(transX, 0);
+							self.lineMovementMetadata[line.title]['ox'] = dx;
+							//this.oy = dy;
+
+						}, function onDragStart(originalX) {
+							if (!self.lineMovementMetadata[line.title]['originalX']) {
+								self.lineMovementMetadata[line.title]['originalX'] = originalX;
+							}
+							
+							self.lineMovementMetadata[line.title]['ox'] = 0;
+										
+						}, function onDragEnd() {
+							//console.log('you have moved ' + (self.lineMovementMetadata[line.title]['deviationX'] / scaleFactor) + ' from the original position.');
+							//console.log(self.lineMovementMetadata);
+						}
+					);
+				}, this);
+			},
+
+			'checkAnswer': function(referenceQuestionData) {
+				var referenceSolution = referenceQuestionData.solution;
+
+				for (line in referenceSolution) {
+					//handle negative values first
+					if (referenceSolution[line].deviation < 0) {
+ 						// handle wrong values
+						if (this.lineMovementMetadata[line]['deviationX'] > referenceSolution[line].deviation) {
+							//wrong
+							this.answerIsWrong();
+							return;
+						}
+					}
+
+					else if (referenceSolution[line].deviation > 0) {
+						// handle wrong values
+						if (this.lineMovementMetadata[line].deviationX < referenceSolution[line].deviation) {
+							//wrong
+							this.answerIsWrong();
+							return;
+						}
+					}
+
+					else {
+						// when deviation is 0
+						if (this.lineMovementMetadata[line].deviationX != referenceSolution[line].deviation) {
+							this.answerIsWrong();
+							return;
+						}
+					}
+				}
+
+				this.answerIsCorrect();
+			},
+
+			'answerIsWrong': function() {
+				alert('Answer is wrong!');
+			},
+
+			'answerIsCorrect': function() {
+				alert('Answer is correct!');
+			},
+
+			'lineMovementMetadata': {}
+		};
+
+		window.onload = function() {
+			graph.renderGraph(referenceQuestionData, 15);
+		}
+	</script>
+
+	<style type="text/css">
+		.question-area {
+			position: absolute;
+			left: 550px;
+		}
+	</style>
+</head>
+<body>
+<div class="question-area">
+<p>Move the demand curve to the left.</p>
+<input type="button" value="Submit Answer" onClick="graph.checkAnswer(referenceQuestionData)" />
+</div>
+
+
+</body>
+</html>

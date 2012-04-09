@@ -1,0 +1,69 @@
+<div class="navbar navbar-fixed-top">
+        <div class="navbar-inner mainNavHeight">
+            <div class="container">
+                <div class="navmenu">
+                  <a href="#/nav/lobby"><div class="lobbyicon navicon"></div>Lobby</a>
+                  <a href="#/nav/deckworkshop"><div class="workshopicon navicon"></div>Deck Workshop</a>
+                  <a href="#/nav/training"><div class="trainingicon navicon"></div>Go Training</a>
+                  <a href="#/nav/stats"><div class="statsicon navicon"></div>My Stats</a>
+                  <a href="#/nav/logout"><div class="logouticon navicon"></div>Log Out</a>
+                </div>
+            </div>
+        </div>
+</div>
+
+</br>
+
+<h3 class="centerText">Pick 3 cards to send out as a challenge!</h3>
+
+<div class="float_l cards-selected">
+
+</div>
+
+<div ng:controller="MultiplayerCtrl">
+    <h3 class="centerText">Deck Limit: 5 <a class="h6">(whats this?)</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span ng:class="cardErrorClass">{{noOfCardsChosen}}/3 cards selected {{infoMsg}}</span> </h3>
+    <hr>
+    <div id="chooseCard" ng:class="submitHideClass" class="wide-scroller" ng:init="onload()">
+            <div ng:repeat="card in cards">
+                <div id="{{card.id}}" ng:click="addCard(card.id)" class="question level{{card.level}}">
+                    <div class="cardcanvas selection float_l {{card.special_color}}">
+                        <span class="question-level"></span>
+                        <div class="question-meta">
+                            <span class="label label-warning hide {{card.special_color}}"><i class="icon-star icon-white"></i> {{card.special_color}} Card <i class="icon-star icon-white"></i></span>
+                            <span class="label label-success"><i class="icon-ok icon-white"></i> {{card.num_correct_attempts}}</span>
+                            <span class="label label-important"><i class="icon-remove icon-white"></i> {{card.num_wrong_attempts}}</span>
+                        </div>
+                        <br class="clearfix"/>
+                        <div class="question-topic clearfix centerText">{{card.topic}}</div>
+                        <div class="question-name centerText">{{card.question_name}}</div>
+                        <div class="question-body">{{card.question_body}}</div>
+
+                      <div class="question-selection" ng:hide="card.question_type=='graph'">
+                          <ol>
+                          <li class="qAns" ng:repeat="mcq_answer in card.mcq_answers">{{mcq_answer}}</li>
+                          </ol>
+                      </div>
+                        <span class="question-level bottom"></span>
+                    </div>
+                    <span class="selectedCardLabel">Selected</span>
+                </div>
+            </div>
+            <br class="clearfix"><br>
+    </div>
+    <div class="centralizeButton">
+            <!--<span class="big-arrow">»</span> -->
+            <input class="btn btn-large btn-info" type="button" ng:class="disabledClass" ng:click="addGame(facebook_id,facebook_name)" value="Send out Challenge!" id="submitGame"/></h3>
+            <!--<span class="big-arrow">«</span> -->
+    </div>
+    <div id="addGameMsg" class="hide">
+        <input class="alert alert-success" value="{{chosenCards}} have been added"/>
+    </div>
+    <!--<a href="#/nav/lobby"><div class="centerText">Head back to lobby to find challenges!</div></a> -->
+</div>
+
+<!-- GA JS-->
+<script type="text/javascript">
+    _gaq.push(['_trackPageview', location.href.match(/\/app\/(.*)/)[0]]);
+</script>

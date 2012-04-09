@@ -1,0 +1,178 @@
+<div class="navbar navbar-fixed-top" ng:bind="startFBVerification">
+        <div class="navbar-inner mainNavHeight">
+            <div class="container">
+                <div class="navmenu">
+                  <a href="#/nav/lobby"><div class="lobbyicon navicon"></div>Lobby</a>
+                  <a href="#/nav/deckworkshop"><div class="workshopicon navicon"></div>Deck  Workshop</a>
+                  <a href="#/nav/training"><div class="trainingicon navicon"></div>Go Training</a>
+                  <a href="#/nav/stats"><div class="statsicon navicon"></div>My Stats</a>
+                  <a href="#/nav/logout"><div class="logouticon navicon"></div>Log Out</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<br><br>
+
+<div class="alert alert-info" ng:controller='BuildQuestionCtrl' id="startmsg">
+
+    <h3 class="alert-heading">Deck Workshop Is Here!</h3><br>
+    <p><strong>What is the Deck Workshop?</strong><br>
+    The Deck Workshop is a place for you to create custom cards to use in a card duel against
+    your friends! Here, we'll let you set up your own question, which will be auto-magically
+    turned into a card. This card will then be added to your deck!</p>
+    
+    <p>
+        <strong>Have suggestions?</strong>
+        We'd love to hear from you! Simply click on the orange tab on the lower right of
+        the page to tell us of your ideas.
+    </p>
+    
+    <p>Click on View Inventory to look at your current collections of cards, or click on Add Questions to build a Card now!</p>
+    <a ng:click="AB_BuildQn()" class="btn btn-large btn-warning lobbybtn train">
+        <span>Build Questions!</span>
+    </a>
+    
+</div>
+<!-- This is A page-->
+<div id="wrapper1" class="workshop-wrapper hide" ng:controller="BuildQuestionCtrl">
+    <div class="alert-error alert" ng:class="errorClass">
+        <a class="close" ng:click="errorClass='hide'">×</a>
+        {{errorMsg}}
+    </div>
+    <div class="question float_l level{{level}}">
+        <div class="cardcanvas float_l">
+            <span class="question-level"></span>
+            <div class="question-meta">
+                <span class="label label-success"><i class="icon-ok icon-white"></i> 0</span>
+                <span class="label label-important"><i class="icon-remove icon-white"></i> 0</span>
+            </div>
+            <br class="clearfix"/>
+            <div class="question-topic clearfix centerText">Demand and Supply</div>
+            <input type="text" class="question-name centerText" name="q_name" value="Question Name" onclick="if(this.value=='Question Name') this.value='';" onblur="this.value=!this.value?'Question Name':this.value;"/>
+            <textarea rows="10" class="question-body" name="q_text" value="Enter your question text here" onclick="if(this.value=='Enter your question text here') this.value='';" onblur="this.value=!this.value?'Enter your question text here':this.value;">Enter your question text here</textarea>
+        </div>
+        <span class="question-level bottom"></span>
+    </div>
+
+    <h3>What type of question is this?</h3>
+    <div class="btn-group what-type">
+        <button id="mcqBtn1" class="btn" ng:class="mcqtoggle" ng:click="selected='mcq';mcqtoggle='active';graphtoggle=''">MCQ Question</button>
+        <button id="graphBtn1" class="btn" ng:class="graphtoggle" ng:click="selected='graph';graphtoggle='active';mcqtoggle=''">Graph Question</button>
+    </div>
+    <h3>Select a Topic</h3>
+    <div class="btn-group what-type">
+        <select id="select01" style="margin-left:7px;">
+            <option value='topic'>Demand & Supply</option>
+        </select>
+    </div>
+    <h3>How difficult is this question?</h3>
+    <div class="btn-group what-type" ng:init="level='1';l1='active'">
+        <button class="btn" ng:class="l1" ng:click="level='1';l1='active';l2='';l3=''">Level 1</button>
+        <button class="btn" ng:class="l2" ng:click="level='2';l2='active';l1='';l3=''">Level 2</button>
+        <button class="btn" ng:class="l3" ng:click="level='3';l3='active';l2='';l1=''">Level 3</button>
+
+    </div>
+
+    <!-- MCQ Question Setup -->
+    <div ng:show="selected=='mcq'" class="question-setup" id="question-setup1">
+        <h3>Enter the correct answer</h3>
+        <textarea class="input-xlarge" name="correctAnswer" rows="2"></textarea>
+
+        <h3>Please provide 3 incorrect answers</h3>
+        <textarea class="input-xlarge" name="wrongAnswer1" rows="2"></textarea><br>
+        <textarea class="input-xlarge" name="wrongAnswer2" rows="2"></textarea><br>
+        <textarea class="input-xlarge" name="wrongAnswer3" rows="2"></textarea>
+    </div>
+
+    <!-- GRAPH Question Setup -->
+    <div ng:show="selected=='graph'" class="question-setup" id="question-setup1">
+        <h3>Supply curve should</h3>
+        <div class="btn-group what-type">
+            <button class="btn" ng:class='sLeft' ng:click="supply='left';sLeft='active';sRight='';s=''" >Shift Left</button>
+            <button class="btn" ng:class='s' ng:click="supply='';s='active';sRight='';sLeft=''" >No Change</button>
+            <button class="btn" ng:class='sRight' ng:click="supply='right';sRight='active';sLeft='';s=''">Shift Right</button>
+        </div>
+
+        <h3>Demand curve should</h3>
+        <div class="btn-group what-type">
+            <button class="btn" ng:class='dLeft' ng:click="demand='left';dLeft='active';dRight='';d=''">Shift Left</button>
+            <button class="btn" ng:class='d' ng:click="demand='';d='active';dRight='';dLeft=''" >No Change</button>
+            <button class="btn" ng:class='dRight' ng:click="demand='right';dRight='active';dLeft='';d=''">Shift Right</button>
+        </div>
+    </div>
+    <br class="clearfix"/>
+    <button id="submitBtn1" class="float_r btn btn-primary btn-large submit" ng:click="submitQ()">Submit Card!</button>
+
+</div>
+
+
+<!-- This is B page-->
+<div id="wrapper2" class="workshop-wrapper hide" ng:controller="BuildQuestionCtrl">
+    <div class="alert-error alert" ng:class="errorClass">
+        <a class="close" ng:click="errorClass='hide'">×</a>
+        {{errorMsg}}
+    </div>
+        <br class="clearfix"/>
+        <div class="question-topic clearfix">Demand and Supply</div>
+        <input type="text" name="q_name" value="Question Name" onclick="if(this.value=='Question Name') this.value='';" onblur="this.value=!this.value?'Question Name':this.value;"/><br />
+        <textarea rows="10" class="question-body" name="q_text" value="Enter your question text here" onclick="if(this.value=='Enter your question text here') this.value='';" onblur="this.value=!this.value?'Enter your question text here':this.value;">Enter your question text here</textarea>
+
+    <h3>What type of question is this?</h3>
+    <div class="btn-group what-type">
+        <button class="btn" ng:class="mcqtoggle" ng:click="selected='mcq';mcqtoggle='active';graphtoggle=''">MCQ Question</button>
+        <button class="btn" ng:class="graphtoggle" ng:click="selected='graph';graphtoggle='active';mcqtoggle=''">Graph Question</button>
+    </div>
+    <h3>Select a Topic</h3>
+    <div class="btn-group what-type">
+        <select id="select01" style="margin-left:7px;">
+            <option value='topic'>Demand & Supply</option>
+        </select>
+    </div>
+    <h3>How difficult is this question?</h3>
+    <div class="btn-group what-type" ng:init="level='1';l1='active'">
+        <button class="btn" ng:class="l1" ng:click="level='1';l1='active';l2='';l3=''">Level 1</button>
+        <button class="btn" ng:class="l2" ng:click="level='2';l2='active';l1='';l3=''">Level 2</button>
+        <button class="btn" ng:class="l3" ng:click="level='3';l3='active';l2='';l1=''">Level 3</button>
+
+    </div>
+
+    <!-- MCQ Question Setup -->
+    <div ng:show="selected=='mcq'" class="question-setup">
+        <h3>Enter the correct answer</h3>
+        <textarea class="input-xlarge" name="correctAnswer" rows="2"></textarea>
+
+        <h3>Please provide 3 incorrect answers</h3>
+        <textarea class="input-xlarge" name="wrongAnswer1" rows="2"></textarea><br>
+        <textarea class="input-xlarge" name="wrongAnswer2" rows="2"></textarea><br>
+        <textarea class="input-xlarge" name="wrongAnswer3" rows="2"></textarea>
+    </div>
+
+    <!-- GRAPH Question Setup -->
+    <div ng:show="selected=='graph'" class="question-setup">
+        <h3>Supply curve should</h3>
+        <div class="btn-group what-type">
+            <button class="btn" ng:class='sLeft' ng:click="supply='left';sLeft='active';sRight='';s=''" >Shift Left</button>
+            <button class="btn" ng:class='s' ng:click="supply='';s='active';sRight='';sLeft=''" >No Change</button>
+            <button class="btn" ng:class='sRight' ng:click="supply='right';sRight='active';sLeft='';s=''">Shift Right</button>
+        </div>
+
+        <h3>Demand curve should</h3>
+        <div class="btn-group what-type">
+            <button class="btn" ng:class='dLeft' ng:click="demand='left';dLeft='active';dRight='';d=''">Shift Left</button>
+            <button class="btn" ng:class='d' ng:click="demand='';d='active';dRight='';dLeft=''" >No Change</button>
+            <button class="btn" ng:class='dRight' ng:click="demand='right';dRight='active';dLeft='';d=''">Shift Right</button>
+        </div>
+    </div>
+    <br class="clearfix"/>
+    <button id="submitBtn1" class=" btn btn-primary btn-large submit" ng:click="submitQ()">Submit Card!</button>
+
+</div>
+
+
+<!-- GA JS-->
+<script type="text/javascript">
+    _gaq.push(['_trackPageview', location.href.match(/\/app\/(.*)/)[0]]);
+</script>
+
+

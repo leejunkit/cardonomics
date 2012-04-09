@@ -1,0 +1,35 @@
+#application: dev~cardonomics
+application: cardonomics
+#application: haopjh3
+version: 3
+runtime: python
+api_version: 1
+
+#builtins:
+#- remote_api: on  #trying to download datastore
+
+handlers:
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon\.ico
+
+- url: /app
+  static_dir: app
+
+- url: /config
+  static_dir: config
+
+- url: /angular
+  static_dir: test
+
+- url: /payment
+  static_dir: payment
+
+- url: /test.*
+  script: gaeunit.py
+
+- url: /coverage.*
+  script: gaeunit-coverage.py
+
+- url: .*
+  script: main.py
